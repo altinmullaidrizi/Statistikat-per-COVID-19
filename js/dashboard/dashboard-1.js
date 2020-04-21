@@ -1,6 +1,122 @@
+
+// Te dhenat per Koronavirus nga API
 (function($) {
     "use strict"
 
+    $.getJSON("https://api.apify.com/v2/key-value-stores/C10heVVVE8yBd1YvF/records/LATEST?disableRedirect=true", function(v2){
+    console.log(v2);
+
+    // var lab = e.lastUpdatedAtApify.split("T");
+    //             var a = lab[0].split("-").reverse().join("-");
+    //             return a;
+
+    var teInfektuar = v2.infected;
+    var teSheruar = v2.recovered;
+    var teVdekur = v2.deceased;
+    var u = v2.lastUpdatedAtApify.split("T");
+    var up = u[0].split("-").reverse().join("/");
+    var upd = u[1].split(":");
+    var upda = upd[0] + ":" + upd[1];
+    var update = up + " " + upda;
+
+
+
+    var p = (teVdekur/teInfektuar)*100;
+    var per = p.toFixed(2);
+    var perqindja = per.concat('%');
+
+    $(".teInfektuar").text(teInfektuar);
+    $(".teSheruar").text(teSheruar);
+    $(".teVdekur").text(teVdekur);
+    $(".perqindja").text(perqindja);
+    $('.update').each(function() {
+        $(this).text(update);
+    });
+
+})
+})(jQuery);
+
+function search() {
+    let inputi = document.getElementById('search').value;
+    var koha;
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    today = dd;
+
+    if((today >= 21 && today <= 23) || (today >= 27 && today <= 30)){
+      switch (inputi) {
+          case "0":
+          case "1":
+            koha = "07:00 - 08:30";
+          break;
+          case "2":
+            koha = "09:00 - 10:30";
+          break;
+          case "3":
+            koha = "11:00 - 12:30";
+          break;
+          case "4":
+            koha = "13:00 - 14:30";
+          break;
+          case "5":
+          case "6":
+            koha = "15:00 - 16:30";
+          break;
+          case "7":
+            koha = "17:00 - 18:30";
+          break;
+          case "8":
+            koha = "19:00 - 20:30";
+          break;
+          case "9":
+            koha = "21:00 - 22:30";
+          break;
+          default:
+              koha = "Numri është shënuar gabim!";
+        }
+      } else if((today >= 24 && today <= 26) || (today >= 01 && today <= 04)){
+        switch (inputi) {
+            case "5":
+            case "6":
+              koha = "07:00 - 08:30";
+            break;
+            case "0":
+              koha = "09:00 - 10:30";
+            break;
+            case "1":
+              koha = "11:00 - 12:30";
+            break;
+            case "8":
+              koha = "13:00 - 14:30";
+            break;
+            case "7":
+            case "9":
+              koha = "15:00 - 16:30";
+            break;
+            case "2":
+              koha = "17:00 - 18:30";
+            break;
+            case "3":
+              koha = "19:00 - 20:30";
+            break;
+            case "4":
+              koha = "21:00 - 22:30";
+            break;
+            default:
+                koha = "Numri është shënuar gabim!";
+          }
+        } else{
+          koha = "Ka ndodhur një Gabim! Shikoni nëse data në pajisjen tuaj është në rregull.<br><br> <span>Gjithashtu ky program do të funksionoj vetëm gjatë kohës kur ligji për kufizim të lëvizjes është në fuqi. (deri më 04/05/2020)</span>";
+        }
+
+            document.getElementById("kohajuaj").innerHTML = koha;
+
+      
+}
+
+(function($) {
+    "use strict"
 
     //todo list
     $(".tdl-new").on('keypress', function(e) {
@@ -28,10 +144,6 @@
         }
 
     });
-
-
-
-
 
     $(".tdl-content a").on("click", function() {
 
@@ -65,124 +177,70 @@
 
     });
 
-
-
-
-
-
-
-
 })(jQuery);
 
 
-(function($) {
-    "use strict"
+//doughnat Chart nga Chart.js
+var ctx = document.getElementById("doughutChart");
+    ctx.height = 320;
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [166, 196, 61],
+                backgroundColor: [
+                    "rgba(49, 208, 147,0.9)",
+                    "rgba(49, 208, 147,0.6)",
+                    "rgba(49, 208, 147,0.3)",
+                ],
+                hoverBackgroundColor: [
+                    "rgba(49, 208, 147,0.9)",
+                    "rgba(49, 208, 147,0.6)",
+                    "rgba(49, 208, 147,0.3)",
+                ]
 
-    var i = new Datamap( {
-        scope: "world", 
-        element: document.getElementById("world-map"), 
-        responsive: !0, 
-        geographyConfig: {
-            popupOnHover: !1, 
-            highlightOnHover: !1, 
-            borderColor: "transparent", 
-            borderWidth: 1, 
-            highlightBorderWidth: 3, 
-            highlightFillColor: "rgba(0,123,255,0.5)", 
-            highlightBorderColor: "transparent", 
-            borderWidth: 1
-        }, 
-        bubblesConfig: {
-            popupTemplate: function (e, i) {
-                return '<div class="datamap-sales-hover-tooltip">' + i.country + '<span class="ml-2"></span>' + i.sold + "</div>"
-            }, 
-            borderWidth: 0, 
-            highlightBorderWidth: 3, 
-            highlightFillColor: "rgba(0,123,255,0.5)", 
-            highlightBorderColor: "transparent", 
-            fillOpacity: .75
-        }, 
-        fills: {
-            Visited: "#777", 
-            neato: "#777", 
-            white: "#777", 
-            defaultFill: "#EBEFF2"
+            }],
+            labels: [
+                "Femra",
+                "Meshkuj",
+                "Të pakonfirmuar",
+            ]
+        },
+        options: {
+            responsive: true,
         }
     });
-    
-    i.bubbles([{
-        centered: "USA", fillKey: "white", radius: 5, sold: "$500", country: "United States"
-    }, {
-        centered: "SAU", fillKey: "Visited", radius: 5, sold: "$900", country: "Saudia Arabia"
-    }, {
-        centered: "RUS", fillKey: "neato", radius: 5, sold: "$250", country: "Russia"
-    }, {
-        centered: "CAN", fillKey: "white", radius: 5, sold: "$1000", country: "Canada"
-    }, {
-        centered: "IND", fillKey: "Visited", radius: 5, sold: "$50", country: "India"
-    }, {
-        centered: "AUS", fillKey: "white", radius: 5, sold: "$700", country: "Australia"
-    }, {
-        centered: "BGD", fillKey: "Visited", radius: 5, sold: "$1500", country: "Bangladesh"
-    }
-    ]),
-    window.addEventListener("resize", function (e) {
-        i.resize()
-    });
 
-
-
-
-
-})(jQuery);
 
 (function($) {
     "use strict"
 
-
-     // LINE CHART
-      // Morris bar chart
- Morris.Bar({
-    element: 'morris-bar-chart',
-    data: [{
-        y: '2016',
-        a: 100,
-        b: 90,
-    }, {
-        y: '2017',
-        a: 75,
-        b: 65,
-    }, {
-        y: '2018',
-        a: 50,
-        b: 40,
-    }, {
-        y: '2019',
-        a: 75,
-        b: 65,
-    }, {
-        y: '2020',
-        a: 50,
-        b: 40,
-    }, {
-        y: '2021',
-        a: 75,
-        b: 65,
-    }, {
-        y: '2022',
-        a: 100,
-        b: 90,
-    }],
-    xkey: 'y',
-    ykeys: ['a', 'b', 'c'],
-    labels: ['A', 'B', 'C'],
-    barColors: ['#FC6C8E', '#7571f9'],
-    hideHover: 'auto',
-    gridLineColor: 'transparent',
-    resize: true
-});
-
-
+var ctx = document.getElementById("singelBarChart");
+    ctx.height = 150;
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70+", "Jo të ditura"],
+            datasets: [
+                {
+                    label: "Rastet",
+                    data: [6, 12, 20, 12, 11, 12, 4, 9, 138],
+                    borderColor: "rgb(49, 208, 147)",
+                    borderWidth: "1",
+                    backgroundColor: "rgba(49, 208, 147, 0.6)"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 
 
 
@@ -210,13 +268,7 @@
         height: "390px",
         color: "transparent"
     });
-
-
-
-
-
 })(jQuery);
-
 
 
 (function($) {
@@ -265,9 +317,9 @@
                 },
                 {
                     label: "Rastet e Konfirmuara",
-                    borderColor: "rgb(130, 215, 67)",
+                    borderColor: "rgb(117, 214, 156)",
                     borderWidth: "1",
-                    backgroundColor: "rgb(217, 243, 198)",
+                    backgroundColor: "rgba(117, 214, 156, 0.6)",
                     data: dataCases
                 }
             ]
@@ -374,7 +426,6 @@
 })(jQuery);
 
 
-
 /*******************
 Chart Chartist
 *******************/
@@ -423,8 +474,6 @@ Chart Chartist
     });
 
 })(jQuery);
-
-
 
 
 /*******************

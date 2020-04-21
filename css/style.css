@@ -66,6 +66,38 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important; }
 
+  
+.shkruje {
+  padding: 5px;
+  font-size: 15px;
+  border: 1px solid #26d15e;
+  border-radius:5px;
+  /* float: left; */
+  width: 25%;
+  background: #ffffff;
+}
+
+ .kshyre {
+  /* float: left; */
+  width: 8%;
+  padding: 5px;
+  background: #56db82;
+  color: white;
+  font-size: 15px;
+  border: 1px solid #26d15e;
+  border-radius:5px;
+  cursor: pointer;
+}
+
+.kshyre:hover {
+  background: #26d15e;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 /*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -139,6 +171,17 @@ hr {
   box-sizing: content-box;
   height: 0;
   overflow: visible; }
+
+#button-addon2{
+    /* background-color:rgb(50, 168, 82); */
+    border-color: rgb(50, 168, 82);
+    color: rgb(50, 168, 82);
+    font-family: 'Raleway', sans-serif;
+}
+#button-addon2:hover{
+    background-color: rgba(50, 168, 82, 0.8);
+    color: white;
+}
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;

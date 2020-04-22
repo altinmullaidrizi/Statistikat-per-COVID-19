@@ -279,9 +279,9 @@ var ctx = document.getElementById("singelBarChart");
     ctx.height = 150;
     var labels = datasets.map(function (e) {
                 var lab = e.lastUpdatedAtApify.split("T");
-                var a = lab[0].split("-").reverse().join("-");
-                return a;
-
+                var a = lab[0].split("-");
+                var b = a[2] + "/" + a[1];
+                return b;
             });
     var dataCases = datasets.map(function (e) {
         if(e.identifiedCases <= 112){
